@@ -1,10 +1,10 @@
-# Bestattungs-App
+# Büchel Bestattungen - Arbeitsprozess Todesfall
 
-Einfache interne React-Web-App fuer die Fallaufnahme, Live-Offerte, interne Rechnungsgrundlage, Checkliste und Arbeitsplanung bei einem Todesfall.
+Moderne interne React/TypeScript-Web-App fuer die digitale Begleitung eines Todesfalls: Stammdaten, Trauergespraech, Live-Offerte, Organisation, Arbeitsrapport, Rechnungsgrundlage und Abschluss.
 
 ## Lokal verwenden
 
-Die App funktioniert ohne Backend. Nach dem Build kann sie direkt im Browser geoeffnet werden:
+Die App funktioniert im MVP ohne Backend mit `localStorage`. Direkt starten:
 
 ```powershell
 BESTATTUNGS-APP.html
@@ -28,7 +28,18 @@ node build-standalone.mjs
 
 ## Speicherung
 
-Die Faelle werden aktuell im Browser unter dem `localStorage`-Key `bestattungsunternehmen.cases.v1` gespeichert. Die Speicherlogik liegt zentral in `src/storage/caseRepository.js`, damit spaeter Google Drive, Supabase oder Firebase angebunden werden kann, ohne die UI-Komponenten grundlegend umzubauen.
+Die Faelle werden aktuell im Browser unter dem `localStorage`-Key `buechel-bestattungen.cases.v1` gespeichert. Die Speicherlogik liegt zentral in `src/storage/caseRepository.ts`, damit spaeter Supabase, Firebase oder Google Drive angebunden werden kann, ohne die UI-Komponenten grundlegend umzubauen.
+
+## Architektur
+
+- `src/data/priceList.ts`: zentrale Leistungsliste mit Kategorie, Preis, MwSt. und Bexio-relevanten Flags.
+- `src/types.ts`: Datenmodell fuer Todesfall, Offerte, Arbeitsrapport, Checkliste und Bexio-Draft.
+- `src/storage/caseRepository.ts`: austauschbare Repository-Schicht.
+- `src/App.tsx`: Wizard-Flow und UI-Komponenten.
+
+## Bexio-Vorstufe
+
+Die App erstellt keine Rechnung. Sie erzeugt eine strukturierte Rechnungsgrundlage mit Kontaktdaten, Positionen, MwSt. und Total, die spaeter an die offizielle Bexio API uebergeben werden kann.
 
 ## Druck / PDF
 
