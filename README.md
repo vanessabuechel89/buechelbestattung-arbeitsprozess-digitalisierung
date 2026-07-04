@@ -7,8 +7,10 @@ Einfache interne React-Web-App fuer die Fallaufnahme, Live-Offerte, interne Rech
 Die App funktioniert ohne Backend. Nach dem Build kann sie direkt im Browser geoeffnet werden:
 
 ```powershell
-dist\index.html
+APP-STARTEN.html
 ```
+
+Alternativ kann direkt `dist/index.html` im Browser geoeffnet werden. `README.md` ist nur diese Anleitung und keine App-Datei.
 
 Fuer Entwicklung:
 
