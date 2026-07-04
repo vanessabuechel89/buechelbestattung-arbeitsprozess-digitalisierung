@@ -12,15 +12,61 @@ export interface CaseRepository {
 export const localStorageCaseRepository: CaseRepository = {
   list() {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]") as FuneralCase[];
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]") as unknown;
+      if (!Array.isArray(parsed)) return [];
+      return parsed
+        .map((item) => normalizeCase(item))
+        .filter((item): item is FuneralCase => Boolean(item));
     } catch {
       return [];
     }
   },
   saveAll(cases) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cases));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cases));
+    } catch {
+      // The app remains usable if browser storage is unavailable; JSON export is still possible.
+    }
   },
 };
+
+function normalizeCase(value: unknown): FuneralCase | null {
+  if (!value || typeof value !== "object") return null;
+  const source = value as Partial<FuneralCase>;
+  if (!source.id || !source.caseNumber) return null;
+
+  const fallback = createEmptyCase([]);
+  return {
+    ...fallback,
+    ...source,
+    masterData: { ...fallback.masterData, ...(source.masterData ?? {}) },
+    relatives: { ...fallback.relatives, ...(source.relatives ?? {}) },
+    offer: {
+      ...fallback.offer,
+      ...(source.offer ?? {}),
+      lines: Array.isArray(source.offer?.lines)
+        ? fallback.offer.lines.map((line) => ({
+            ...line,
+            ...(source.offer?.lines.find((item) => item.id === line.id) ?? {}),
+          }))
+        : fallback.offer.lines,
+      flexibleFarewell: {
+        ...fallback.offer.flexibleFarewell,
+        ...(source.offer?.flexibleFarewell ?? {}),
+      },
+    },
+    appointments: {
+      ...fallback.appointments,
+      ...(source.appointments ?? {}),
+      cremation: { ...fallback.appointments.cremation, ...(source.appointments?.cremation ?? {}) },
+      viewing: { ...fallback.appointments.viewing, ...(source.appointments?.viewing ?? {}) },
+      farewell: { ...fallback.appointments.farewell, ...(source.appointments?.farewell ?? {}) },
+      urnBurial: { ...fallback.appointments.urnBurial, ...(source.appointments?.urnBurial ?? {}) },
+    },
+    workReport: Array.isArray(source.workReport) ? source.workReport : [],
+    checklist: Array.isArray(source.checklist) ? source.checklist : fallback.checklist,
+  };
+}
 
 export function createEmptyCase(existingCases: FuneralCase[]): FuneralCase {
   const now = new Date().toISOString();
