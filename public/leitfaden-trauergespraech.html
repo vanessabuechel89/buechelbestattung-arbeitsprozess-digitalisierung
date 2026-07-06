@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leitfaden Trauergespr&auml;ch - B&uuml;chel Bestattungen</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f8f7f3;
+        --paper: #ffffff;
+        --soft: #faf8f2;
+        --line: #dedbd2;
+        --text: #22231f;
+        --muted: #6d6a60;
+        --gold: #b6945c;
+        --gold-dark: #8b6f42;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      main {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 34px 24px 56px;
+      }
+
+      header {
+        padding: 34px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 24px;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(30px, 5vw, 48px);
+      }
+
+      h2 {
+        margin: 34px 0 14px;
+        font-size: 24px;
+      }
+
+      h3 {
+        margin: 22px 0 10px;
+        font-size: 18px;
+      }
+
+      p {
+        margin: 0 0 12px;
+      }
+
+      ul, ol {
+        margin: 0 0 16px;
+        padding-left: 22px;
+      }
+
+      li {
+        margin: 5px 0;
+      }
+
+      strong {
+        font-weight: 800;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--gold-dark);
+        font-size: 12px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      .lead {
+        max-width: 820px;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        color: var(--text);
+        padding: 10px 14px;
+        font-weight: 780;
+        text-decoration: none;
+      }
+
+      .button.primary {
+        border-color: var(--gold);
+        background: var(--gold);
+        color: #ffffff;
+      }
+
+      section {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 22px;
+        margin-bottom: 18px;
+      }
+
+      .note {
+        background: var(--soft);
+        border-left: 4px solid var(--gold);
+        padding: 14px;
+        border-radius: 6px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--soft);
+        padding: 14px;
+      }
+
+      .checklist {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .checklist li {
+        position: relative;
+        padding-left: 24px;
+      }
+
+      .checklist li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.55em;
+        width: 10px;
+        height: 10px;
+        border: 2px solid var(--gold);
+        border-radius: 3px;
+        background: #ffffff;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      th, td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 760px) {
+        main {
+          padding: 22px 14px 42px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        section {
+          padding: 16px;
+        }
+      }
+
+      @media print {
+        body {
+          background: #ffffff;
+        }
+
+        main {
+          max-width: none;
+          padding: 0;
+        }
+
+        section {
+          break-inside: avoid;
+          border-color: #d8d8d8;
+        }
+
+        .toolbar {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">B&uuml;chel Bestattungen</p>
+        <h1>Leitfaden Trauergespr&auml;ch</h1>
+        <p class="lead">
+          Ein interner Praxisleitfaden f&uuml;r neue Mitarbeitende. Er hilft, ein Trauergespr&auml;ch ruhig zu f&uuml;hren,
+          die wichtigsten Fragen zu stellen und nach dem Gespr&auml;ch den Todesfall sauber zu organisieren.
+        </p>
+        <div class="toolbar">
+          <a class="button" href="./">Zur App</a>
+          <button class="button primary" onclick="window.print()">Drucken / PDF erstellen</button>
+        </div>
+      </header>
+
+      <section>
+        <h2>1. Grundhaltung im Trauergespr&auml;ch</h2>
+        <p>
+          Ein Trauergespr&auml;ch ist kein Verkaufsgespr&auml;ch. Es ist ein gef&uuml;hrtes Orientierungsgespr&auml;ch in
+          einer Ausnahmesituation. Die Aufgabe ist, Ruhe zu schaffen, W&uuml;nsche zu kl&auml;ren und die n&auml;chsten
+          Schritte verst&auml;ndlich zu machen.
+        </p>
+        <div class="note">
+          <strong>Merksatz:</strong> Erst verstehen, dann erfassen, dann organisieren. Die Angeh&ouml;rigen sollen
+          am Ende wissen: Was ist entschieden, was ist offen, und wer macht als N&auml;chstes was?
+        </div>
+      </section>
+
+      <section>
+        <h2>2. Vorbereitung vor dem Gespr&auml;ch</h2>
+        <ul class="checklist">
+          <li>Ruhigen Raum vorbereiten, Wasser bereitstellen, Unterlagen griffbereit halten.</li>
+          <li>App &ouml;ffnen und einen neuen Todesfall starten oder bestehenden Fall &ouml;ffnen.</li>
+          <li>Falls bereits bekannt: Name, Todesdatum, Kontaktperson und Telefonnummer vorerfassen.</li>
+          <li>Preisliste und aktuelle interne Abl&auml;ufe pr&uuml;fen, besonders bei Sonderw&uuml;nschen.</li>
+          <li>Notizblock bereithalten f&uuml;r Dinge, die nicht sofort entschieden werden.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. Gespr&auml;ch er&ouml;ffnen</h2>
+        <p>Beginnen Sie ruhig, knapp und menschlich. Kein langer Einstieg, keine Fachsprache.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Guter Einstieg</h3>
+            <p>
+              "Mein herzliches Beileid. Wir gehen Schritt f&uuml;r Schritt durch alles hindurch. Wenn etwas zu viel
+              ist, machen wir kurz Pause."
+            </p>
+          </div>
+          <div class="card">
+            <h3>Rahmen setzen</h3>
+            <p>
+              "Ich stelle Ihnen einige Fragen, damit wir die Bestattung gut vorbereiten k&ouml;nnen. Nicht alles muss
+              heute entschieden werden."
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>4. Stammdaten erfassen</h2>
+        <p>Diese Angaben werden einmal erfasst und danach in Offerte, Organisation, Rapport und Rechnungsgrundlage weiterverwendet.</p>
+        <h3>Verstorbene Person</h3>
+        <ul>
+          <li>Wie lautet der vollst&auml;ndige Name der verstorbenen Person?</li>
+          <li>Geburtsdatum, Todestag und falls bekannt Todeszeit?</li>
+          <li>Wo ist die Person verstorben: zuhause, Spital, Altersheim oder anderer Ort?</li>
+          <li>Letzte Wohnadresse, Heimatort, Beruf, Konfession?</li>
+          <li>Gibt es einen Ehepartner oder eine wichtige Bezugsperson?</li>
+        </ul>
+        <h3>Angeh&ouml;rige und Kontakt</h3>
+        <ul>
+          <li>Wer ist die Hauptkontaktperson f&uuml;r Entscheidungen?</li>
+          <li>Welche Beziehung besteht zur verstorbenen Person?</li>
+          <li>Telefon, Mobile, E-Mail und Adresse?</li>
+          <li>Wer erh&auml;lt sp&auml;ter die Rechnung oder Rechnungsgrundlage?</li>
+          <li>Gibt es weitere Personen, die informiert oder einbezogen werden m&uuml;ssen?</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. Dokumente und erste Abkl&auml;rungen</h2>
+        <p>Fragen Sie sachlich und ohne Druck. Wenn Unterlagen fehlen, wird notiert, wer sie besorgt.</p>
+        <ul class="checklist">
+          <li>Todesbescheinigung vorhanden?</li>
+          <li>Familienb&uuml;chlein oder Personenstandsdokumente vorhanden?</li>
+          <li>Ausweis der verstorbenen Person vorhanden?</li>
+          <li>Vorsorgeauftrag, Bestattungswunsch, Patientenverf&uuml;gung oder schriftliche W&uuml;nsche vorhanden?</li>
+          <li>Gibt es spezielle religi&ouml;se, kulturelle oder famili&auml;re Vorgaben?</li>
+        </ul>
+        <p class="note">
+          Beh&ouml;rdliche Vorgaben k&ouml;nnen je nach Gemeinde, Kanton und Situation unterschiedlich sein. Interne
+          Checklisten und aktuelle lokale Anforderungen haben Vorrang.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. W&uuml;nsche zur Bestattung kl&auml;ren</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Thema</th>
+              <th>Fragen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bestattungsart</td>
+              <td>Kremation oder Erdbestattung? Gibt es bereits einen Wunsch der verstorbenen Person?</td>
+            </tr>
+            <tr>
+              <td>Abschied</td>
+              <td>Soll es einen Abschied geben? Im kleinen Kreis, in der Kapelle, Kirche, zuhause oder am Grab?</td>
+            </tr>
+            <tr>
+              <td>Aufbahrung</td>
+              <td>Ist eine Aufbahrung gew&uuml;nscht? Wo, wann und wer soll Abschied nehmen k&ouml;nnen?</td>
+            </tr>
+            <tr>
+              <td>Urne / Sarg</td>
+              <td>Wurde eine Urne oder ein Sarg bereits gew&auml;hlt? Schlicht, klassisch, besondere W&uuml;nsche?</td>
+            </tr>
+            <tr>
+              <td>Trauerfeier</td>
+              <td>Mit Pfarrer, Trauerredner, Musik, Technik, Blumen, Fotos, Ritualen?</td>
+            </tr>
+            <tr>
+              <td>Drucksachen</td>
+              <td>Leidzirkulare, Todesanzeige, Danksagung? Wer liefert Texte und Adressen?</td>
+            </tr>
+            <tr>
+              <td>Grab / Beisetzung</td>
+              <td>Gemeinschaftsgrab, Urnengrab, Privatgrab, mit Name oder ohne Name?</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>7. Live-Offerte im Gespr&auml;ch</h2>
+        <p>
+          Die Offerte ist eine grobe Kosten&uuml;bersicht. Sie hilft den Angeh&ouml;rigen, Entscheidungen einzuordnen.
+          Keine falsche Genauigkeit versprechen, sondern transparent bleiben.
+        </p>
+        <ul class="checklist">
+          <li>Leistungen im Bereich Trauergespr&auml;ch ausw&auml;hlen.</li>
+          <li>Mengen pr&uuml;fen und bei Bedarf anpassen.</li>
+          <li>Preise nur bewusst &auml;ndern und mit Bemerkung dokumentieren.</li>
+          <li>Flexiblen Abschied mit Stunden, Fachperson und Gehilfe erfassen.</li>
+          <li>Bemerkungen zur Offerte festhalten.</li>
+          <li>Am Schluss die Kosten&uuml;bersicht kurz gemeinsam durchgehen.</li>
+        </ul>
+        <div class="note">
+          Formulierung: "Das ist eine grobe Kosten&uuml;bersicht auf Basis der heute besprochenen Leistungen.
+          Wenn sich W&uuml;nsche oder externe Kosten &auml;ndern, passen wir die Grundlage entsprechend an."
+        </div>
+      </section>
+
+      <section>
+        <h2>8. Gespr&auml;ch abschliessen</h2>
+        <p>Am Ende muss nicht alles erledigt sein. Wichtig ist, dass klar ist, was entschieden wurde und was offen bleibt.</p>
+        <ul>
+          <li>Zusammenfassen: Bestattungsart, Termine, Ort, Feier, Urne/Sarg, Drucksachen, offene Unterlagen.</li>
+          <li>Offene Entscheidungen benennen und verantwortliche Person festlegen.</li>
+          <li>N&auml;chste Kontaktaufnahme vereinbaren.</li>
+          <li>Trauergespr&auml;ch in der App abschliessen, wenn der Kundenteil fixiert werden soll.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9. Was nach dem Trauergespr&auml;ch zum Todesfall geh&ouml;rt</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Organisation</h3>
+            <ul>
+              <li>Abholung, Einsargen und &Uuml;berf&uuml;hrung koordinieren.</li>
+              <li>Krematorium, Friedhof, Kirche oder Kapelle informieren.</li>
+              <li>Termine f&uuml;r Kremation, Aufbahrung, Abschied und Urnenbeisetzung eintragen.</li>
+              <li>Grabart und Ort der Beisetzung festhalten.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Drittleistungen</h3>
+            <ul>
+              <li>Blumen, Musik, Technik, Drucksachen und Todesanzeige organisieren.</li>
+              <li>Pfarrer oder Trauerredner koordinieren.</li>
+              <li>Texte, Bilder, Adressen und Freigaben einholen.</li>
+              <li>Externe Kosten nachvollziehbar dokumentieren.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Interner Rapport</h3>
+            <ul>
+              <li>Alle internen Eins&auml;tze erfassen: Datum, Leistung, Mitarbeitende, Stunden, Ansatz.</li>
+              <li>Verrechnen ja/nein bewusst setzen.</li>
+              <li>Besondere interne Bemerkungen notieren.</li>
+              <li>Rapport zeitnah nachtragen, nicht erst am Fallende.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Rechnungsgrundlage</h3>
+            <ul>
+              <li>Verrechenbare Offertpositionen und Rapporte pr&uuml;fen.</li>
+              <li>Drittleistungen und MwSt. kontrollieren.</li>
+              <li>Rechnungsgrundlage f&uuml;r Bexio vorbereiten.</li>
+              <li>Rechnung bleibt in Bexio, die App ist das Vorsystem.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>10. Interne Checkliste nach dem Gespr&auml;ch</h2>
+        <h3>Am gleichen Tag</h3>
+        <ul class="checklist">
+          <li>Fall in der App speichern und Status pr&uuml;fen.</li>
+          <li>Termine eintragen und intern kommunizieren.</li>
+          <li>Abholung / &Uuml;berf&uuml;hrung organisieren.</li>
+          <li>Fehlende Dokumente und offene Entscheide notieren.</li>
+        </ul>
+        <h3>Vor der Trauerfeier oder Beisetzung</h3>
+        <ul class="checklist">
+          <li>Krematorium, Friedhof, Kirche / Kapelle und Beteiligte best&auml;tigen.</li>
+          <li>Blumen, Drucksachen, Todesanzeige, Musik und Technik kontrollieren.</li>
+          <li>Arbeitsplanung f&uuml;r Angela, Sabine, Natascha oder andere Mitarbeitende eintragen.</li>
+          <li>Checkliste laufend auf "in Arbeit" oder "erledigt" setzen.</li>
+        </ul>
+        <h3>Nach der Beisetzung</h3>
+        <ul class="checklist">
+          <li>Arbeitsrapport vervollst&auml;ndigen.</li>
+          <li>Rechnungsgrundlage pr&uuml;fen und f&uuml;r Bexio vorbereiten.</li>
+          <li>Rechnung in Bexio erstellen lassen / vorbereiten.</li>
+          <li>Abschlussbemerkung erfassen und Fall abschliessen.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>11. Gute Gespr&auml;chsfragen</h2>
+        <ul>
+          <li>"Was war der verstorbenen Person wichtig?"</li>
+          <li>"Gibt es etwas, das auf keinen Fall fehlen soll?"</li>
+          <li>"Soll der Abschied eher schlicht, pers&ouml;nlich oder feierlich sein?"</li>
+          <li>"Wer soll bei Entscheidungen einbezogen werden?"</li>
+          <li>"Gibt es bereits Texte, Musik, Bilder oder Symbole, die passen w&uuml;rden?"</li>
+          <li>"Gibt es etwas, das Ihnen gerade besonders Sorgen macht?"</li>
+          <li>"Welche Punkte m&ouml;chten Sie heute entscheiden, und was darf noch offen bleiben?"</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>12. Was neue Mitarbeitende vermeiden sollten</h2>
+        <ul>
+          <li>Nicht zu schnell durch die Fragen gehen.</li>
+          <li>Keine Fachbegriffe verwenden, ohne sie zu erkl&auml;ren.</li>
+          <li>Keine Kosten kleinreden oder ungenau versprechen.</li>
+          <li>Nicht mehrere offene Punkte im Kopf behalten, sondern direkt in der App notieren.</li>
+          <li>Keine rechtlichen oder medizinischen Aussagen machen, wenn sie nicht sicher sind.</li>
+          <li>Bei Unsicherheit intern nachfragen, bevor etwas zugesichert wird.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>13. Abschlussstandard</h2>
+        <p>Ein Todesfall ist intern gut gef&uuml;hrt, wenn folgende Punkte nachvollziehbar sind:</p>
+        <ul class="checklist">
+          <li>Stammdaten und Kontaktperson sind vollst&auml;ndig.</li>
+          <li>W&uuml;nsche und Entscheidungen sind dokumentiert.</li>
+          <li>Offerte oder Kosten&uuml;bersicht ist nachvollziehbar.</li>
+          <li>Termine und Zust&auml;ndigkeiten sind klar.</li>
+          <li>Checkliste ist aktuell.</li>
+          <li>Arbeitsrapport ist vollst&auml;ndig.</li>
+          <li>Rechnungsgrundlage ist f&uuml;r Bexio vorbereitet.</li>
+          <li>Abschlussbemerkung ist erfasst.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

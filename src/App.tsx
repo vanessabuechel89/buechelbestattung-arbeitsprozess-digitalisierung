@@ -119,6 +119,9 @@ function Dashboard({
           </p>
         </div>
         <div className="hero-actions">
+          <a className="button secondary" href="./leitfaden-trauergespraech.html" target="_blank" rel="noreferrer">
+            <FileText size={18} /> Leitfaden
+          </a>
           <button className="button secondary" onClick={onExport} disabled={!cases.length}>
             <Download size={18} /> Export
           </button>
