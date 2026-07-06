@@ -443,7 +443,7 @@ function ConsultationStep({ caseFile, onChange }: StepProps) {
                     price: caseFile.offer.flexibleFarewell.price || 180,
                     professionalCount: caseFile.offer.flexibleFarewell.professionalCount || 1,
                     assistantCount: caseFile.offer.flexibleFarewell.assistantCount || 1,
-                    assistantRate: caseFile.offer.flexibleFarewell.assistantRate || 80,
+                    assistantRate: caseFile.offer.flexibleFarewell.assistantRate || 90,
                   })
                 }
                 disabled={locked}

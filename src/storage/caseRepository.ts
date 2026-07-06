@@ -135,7 +135,7 @@ export function createEmptyCase(existingCases: FuneralCase[]): FuneralCase {
         hours: 0,
         professionalCount: 1,
         assistantCount: 1,
-        assistantRate: 80,
+        assistantRate: 90,
         employees: [],
         note: "",
       },
