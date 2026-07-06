@@ -118,6 +118,7 @@ export interface BexioDraft {
 
 export interface BexioSettings {
   enabled: boolean;
+  supabaseProjectUrl: string;
   proxyUrl: string;
   defaultUserId: string;
   defaultAccountId: string;

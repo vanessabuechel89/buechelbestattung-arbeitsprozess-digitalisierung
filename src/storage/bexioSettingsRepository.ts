@@ -4,6 +4,7 @@ const STORAGE_KEY = "buechel-bestattungen.bexio-settings.v1";
 
 export const defaultBexioSettings: BexioSettings = {
   enabled: false,
+  supabaseProjectUrl: "",
   proxyUrl: "",
   defaultUserId: "",
   defaultAccountId: "",

@@ -1,0 +1,4 @@
+project_id = "buechel-bestattungen"
+
+[functions.bexio-invoice]
+verify_jwt = false

@@ -543,6 +543,13 @@ td small { color: var(--muted); }
   background: #fffaf0;
 }
 
+.proxy-preview {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  word-break: break-word;
+}
+
 .handover-grid, .appointment-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

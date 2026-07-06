@@ -39,11 +39,12 @@ export async function sendBexioPayload(settings: BexioSettings, payload: BexioPa
     throw new Error("Bexio-Schnittstelle ist noch nicht aktiviert.");
   }
 
-  if (!settings.proxyUrl.trim()) {
-    throw new Error("Bitte zuerst eine sichere Proxy-URL hinterlegen.");
+  const proxyUrl = resolveBexioProxyUrl(settings);
+  if (!proxyUrl) {
+    throw new Error("Bitte zuerst eine Supabase Project URL oder eine direkte Proxy-URL hinterlegen.");
   }
 
-  const response = await fetch(settings.proxyUrl.trim(), {
+  const response = await fetch(proxyUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -57,4 +58,14 @@ export async function sendBexioPayload(settings: BexioSettings, payload: BexioPa
   }
 
   return response.text();
+}
+
+export function resolveBexioProxyUrl(settings: Pick<BexioSettings, "supabaseProjectUrl" | "proxyUrl">): string {
+  const directProxyUrl = settings.proxyUrl.trim();
+  if (directProxyUrl) return directProxyUrl;
+
+  const supabaseUrl = settings.supabaseProjectUrl.trim().replace(/\/$/, "");
+  if (!supabaseUrl) return "";
+
+  return `${supabaseUrl}/functions/v1/bexio-invoice`;
 }

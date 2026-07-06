@@ -12,7 +12,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { caseStatuses, employees, taskStatuses, wizardSteps, workReportExamples } from "./data/constants";
-import { buildBexioPayload, downloadBexioPayload, sendBexioPayload } from "./integrations/bexio";
+import { buildBexioPayload, downloadBexioPayload, resolveBexioProxyUrl, sendBexioPayload } from "./integrations/bexio";
 import { bexioSettingsRepository } from "./storage/bexioSettingsRepository";
 import { exportCases, createEmptyCase, localStorageCaseRepository } from "./storage/caseRepository";
 import type {
@@ -124,6 +124,9 @@ function Dashboard({
         <div className="hero-actions">
           <a className="button secondary" href="./leitfaden-trauergespraech.html" target="_blank" rel="noreferrer">
             <FileText size={18} /> Leitfaden
+          </a>
+          <a className="button secondary" href="./bexio-supabase-einrichtung.html" target="_blank" rel="noreferrer">
+            <FileText size={18} /> Bexio Setup
           </a>
           <button className="button secondary" onClick={onExport} disabled={!cases.length}>
             <Download size={18} /> Export
@@ -672,6 +675,7 @@ function InvoiceBaseStep({ caseFile }: StepProps) {
   const [syncMessage, setSyncMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const payload = buildBexioPayload(caseFile, draft, settings);
+  const resolvedProxyUrl = resolveBexioProxyUrl(settings);
 
   function updateSettings(changes: Partial<BexioSettings>) {
     const nextSettings = { ...settings, ...changes };
@@ -750,17 +754,19 @@ function InvoiceBaseStep({ caseFile }: StepProps) {
           </label>
         </div>
         <p className="muted-copy">
-          Die App sendet keine Bexio-Zugangsdaten direkt aus dem Browser. Für die echte Übertragung wird hier später
-          eine sichere Proxy-URL hinterlegt, die Kontakt und Rechnung in Bexio erstellt.
+          Die App sendet keine Bexio-Zugangsdaten direkt aus dem Browser. Supabase hält den Bexio-Token geheim und
+          erstellt daraus Kontakt und Rechnungsentwurf in Bexio.
         </p>
         <div className="form-grid">
-          <Field label="Proxy-URL" value={settings.proxyUrl} onChange={(value) => updateSettings({ proxyUrl: value })} />
+          <Field label="Supabase Project URL" value={settings.supabaseProjectUrl} onChange={(value) => updateSettings({ supabaseProjectUrl: value })} />
+          <Field label="Direkte Proxy-URL optional" value={settings.proxyUrl} onChange={(value) => updateSettings({ proxyUrl: value })} />
           <Field label="Rechnungstitel" value={settings.invoiceTitle} onChange={(value) => updateSettings({ invoiceTitle: value })} />
           <Field label="Bexio User ID" value={settings.defaultUserId} onChange={(value) => updateSettings({ defaultUserId: value })} />
           <Field label="Bexio Konto ID" value={settings.defaultAccountId} onChange={(value) => updateSettings({ defaultAccountId: value })} />
           <Field label="Bexio Steuer ID" value={settings.defaultTaxId} onChange={(value) => updateSettings({ defaultTaxId: value })} />
           <Field label="Bexio Einheit ID" value={settings.defaultUnitId} onChange={(value) => updateSettings({ defaultUnitId: value })} />
         </div>
+        <p className="proxy-preview">Verwendete Function-URL: {resolvedProxyUrl || "Noch nicht eingerichtet"}</p>
         <div className="integration-actions">
           <button className="button secondary" onClick={() => downloadBexioPayload(payload)}>
             <Download size={18} /> Bexio-Payload herunterladen
