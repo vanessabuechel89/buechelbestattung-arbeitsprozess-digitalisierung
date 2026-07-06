@@ -503,6 +503,46 @@ td small { color: var(--muted); }
   color: var(--muted);
 }
 
+.integration-panel {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--soft-2);
+  padding: 16px;
+}
+
+.integration-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.muted-copy,
+.sync-message {
+  color: var(--muted);
+}
+
+.toggle-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 780;
+}
+
+.toggle-row input {
+  width: auto;
+  min-height: auto;
+}
+
+.sync-message {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border: 1px solid #dec68f;
+  border-radius: 8px;
+  background: #fffaf0;
+}
+
 .handover-grid, .appointment-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

@@ -116,6 +116,38 @@ export interface BexioDraft {
   total: number;
 }
 
+export interface BexioSettings {
+  enabled: boolean;
+  proxyUrl: string;
+  defaultUserId: string;
+  defaultAccountId: string;
+  defaultTaxId: string;
+  defaultUnitId: string;
+  invoiceTitle: string;
+}
+
+export interface BexioPayload {
+  metadata: {
+    caseId: string;
+    caseNumber: string;
+    deceasedName: string;
+    createdAt: string;
+  };
+  contact: BexioDraft["contactLookup"];
+  invoice: {
+    reference: string;
+    title: string;
+    userId: string;
+    accountId: string;
+    taxId: string;
+    unitId: string;
+    positions: InvoicePosition[];
+    subtotal: number;
+    vatTotal: number;
+    total: number;
+  };
+}
+
 export interface InvoicePosition {
   source: "offer" | "workReport";
   description: string;

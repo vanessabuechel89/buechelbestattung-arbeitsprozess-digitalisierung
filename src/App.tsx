@@ -12,8 +12,11 @@ import {
   Trash2,
 } from "lucide-react";
 import { caseStatuses, employees, taskStatuses, wizardSteps, workReportExamples } from "./data/constants";
+import { buildBexioPayload, downloadBexioPayload, sendBexioPayload } from "./integrations/bexio";
+import { bexioSettingsRepository } from "./storage/bexioSettingsRepository";
 import { exportCases, createEmptyCase, localStorageCaseRepository } from "./storage/caseRepository";
 import type {
+  BexioSettings,
   CaseStatus,
   Employee,
   FuneralCase,
@@ -665,6 +668,30 @@ function WorkReportStep({ caseFile, onChange }: StepProps) {
 
 function InvoiceBaseStep({ caseFile }: StepProps) {
   const draft = buildBexioDraft(caseFile);
+  const [settings, setSettings] = useState<BexioSettings>(() => bexioSettingsRepository.load());
+  const [syncMessage, setSyncMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const payload = buildBexioPayload(caseFile, draft, settings);
+
+  function updateSettings(changes: Partial<BexioSettings>) {
+    const nextSettings = { ...settings, ...changes };
+    setSettings(nextSettings);
+    bexioSettingsRepository.save(nextSettings);
+  }
+
+  async function handleSendToBexio() {
+    setIsSending(true);
+    setSyncMessage("Übertragung wird vorbereitet...");
+    try {
+      const result = await sendBexioPayload(settings, payload);
+      setSyncMessage(result || "Bexio-Daten wurden an den Proxy übergeben.");
+    } catch (error) {
+      setSyncMessage(error instanceof Error ? error.message : "Übertragung fehlgeschlagen.");
+    } finally {
+      setIsSending(false);
+    }
+  }
+
   return (
     <section className="subsection print-area">
       <div className="offer-heading">
@@ -711,9 +738,42 @@ function InvoiceBaseStep({ caseFile }: StepProps) {
         <div><span>MwSt.</span><strong>{formatCurrency(draft.vatTotal)}</strong></div>
         <div className="grand"><span>Gesamttotal</span><strong>{formatCurrency(draft.total)}</strong></div>
       </div>
+      <section className="integration-panel no-print">
+        <div className="offer-heading">
+          <div>
+            <p className="eyebrow">Schnittstelle</p>
+            <h3>Bexio-Anbindung</h3>
+          </div>
+          <label className="toggle-row">
+            <input type="checkbox" checked={settings.enabled} onChange={(event) => updateSettings({ enabled: event.target.checked })} />
+            Aktiv
+          </label>
+        </div>
+        <p className="muted-copy">
+          Die App sendet keine Bexio-Zugangsdaten direkt aus dem Browser. Für die echte Übertragung wird hier später
+          eine sichere Proxy-URL hinterlegt, die Kontakt und Rechnung in Bexio erstellt.
+        </p>
+        <div className="form-grid">
+          <Field label="Proxy-URL" value={settings.proxyUrl} onChange={(value) => updateSettings({ proxyUrl: value })} />
+          <Field label="Rechnungstitel" value={settings.invoiceTitle} onChange={(value) => updateSettings({ invoiceTitle: value })} />
+          <Field label="Bexio User ID" value={settings.defaultUserId} onChange={(value) => updateSettings({ defaultUserId: value })} />
+          <Field label="Bexio Konto ID" value={settings.defaultAccountId} onChange={(value) => updateSettings({ defaultAccountId: value })} />
+          <Field label="Bexio Steuer ID" value={settings.defaultTaxId} onChange={(value) => updateSettings({ defaultTaxId: value })} />
+          <Field label="Bexio Einheit ID" value={settings.defaultUnitId} onChange={(value) => updateSettings({ defaultUnitId: value })} />
+        </div>
+        <div className="integration-actions">
+          <button className="button secondary" onClick={() => downloadBexioPayload(payload)}>
+            <Download size={18} /> Bexio-Payload herunterladen
+          </button>
+          <button className="button primary" onClick={handleSendToBexio} disabled={isSending || !settings.enabled}>
+            {isSending ? "Wird gesendet..." : "An Bexio-Proxy senden"}
+          </button>
+        </div>
+        {syncMessage && <p className="sync-message">{syncMessage}</p>}
+      </section>
       <div className="completion-box no-print">
-        <p>Im MVP wird hier die strukturierte Grundlage vorbereitet. Später kann genau diese Struktur an die offizielle Bexio API übertragen werden.</p>
-        <button className="button primary" onClick={() => exportCases([caseFile])}>Für Bexio vorbereiten</button>
+        <p>Die Rechnungsgrundlage kann weiterhin als Fall-JSON exportiert werden. Für Bexio ist zusätzlich ein eigener Payload verfügbar.</p>
+        <button className="button primary" onClick={() => exportCases([caseFile])}>Fall exportieren</button>
       </div>
     </section>
   );
