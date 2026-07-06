@@ -143,4 +143,5 @@ export interface FuneralCase {
   appointments: AppointmentData;
   workReport: WorkReportRow[];
   checklist: ChecklistItem[];
+  closingNotes: string;
 }

@@ -446,6 +446,10 @@ td small { color: var(--muted); }
   color: var(--muted);
 }
 
+.closing-notes {
+  margin-top: 16px;
+}
+
 .offer-heading {
   display: flex;
   justify-content: space-between;

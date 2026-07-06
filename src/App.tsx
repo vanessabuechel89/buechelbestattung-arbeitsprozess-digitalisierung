@@ -744,6 +744,14 @@ function CloseStep({ caseFile, onChange }: StepProps) {
           </div>
         ))}
       </div>
+      <label className="field closing-notes">
+        Bemerkungen zum Abschluss
+        <textarea
+          value={caseFile.closingNotes}
+          onChange={(event) => onChange({ ...caseFile, closingNotes: event.target.value })}
+          placeholder="Interne Bemerkungen zum abgeschlossenen Fall"
+        />
+      </label>
       <div className="completion-box no-print">
         <p>Wenn alle organisatorischen Punkte erledigt sind, kann der Fall abgeschlossen werden.</p>
         <button className="button primary" onClick={closeCase}>Fall abschliessen</button>

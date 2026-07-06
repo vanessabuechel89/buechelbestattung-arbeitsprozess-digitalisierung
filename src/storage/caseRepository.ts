@@ -65,6 +65,7 @@ function normalizeCase(value: unknown): FuneralCase | null {
     },
     workReport: Array.isArray(source.workReport) ? source.workReport : [],
     checklist: Array.isArray(source.checklist) ? source.checklist : fallback.checklist,
+    closingNotes: source.closingNotes ?? "",
   };
 }
 
@@ -149,6 +150,7 @@ export function createEmptyCase(existingCases: FuneralCase[]): FuneralCase {
     },
     workReport: [],
     checklist: checklistTasks.map((task) => ({ id: crypto.randomUUID(), task, status: "Offen" })),
+    closingNotes: "",
   };
 }
 
