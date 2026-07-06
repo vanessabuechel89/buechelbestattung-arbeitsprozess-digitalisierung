@@ -1,4 +1,4 @@
-import type { BexioDraft, FuneralCase, InvoicePosition, OfferLine, WorkReportRow } from "./types";
+import type { BexioDraft, FlexibleFarewell, FuneralCase, InvoicePosition, OfferLine, WorkReportRow } from "./types";
 
 export function formatCurrency(value: number): string {
   return new Intl.NumberFormat("de-CH", { style: "currency", currency: "CHF" }).format(Number(value) || 0);
@@ -22,6 +22,12 @@ export function lineVat(line: Pick<OfferLine, "quantity" | "price" | "vatRate">)
   return lineNetTotal(line) * (asNumber(line.vatRate) / 100);
 }
 
+export function flexibleFarewellTotal(farewell: Pick<FlexibleFarewell, "hours" | "price">): number {
+  const hours = asNumber(farewell.hours);
+  const price = asNumber(farewell.price);
+  return hours > 0 ? hours * price : price;
+}
+
 export function selectedOfferLines(caseFile: FuneralCase): OfferLine[] {
   return caseFile.offer.lines.filter((line) => line.selected && line.showInOffer);
 }
@@ -30,7 +36,7 @@ export function offerTotals(caseFile: FuneralCase) {
   const lines = selectedOfferLines(caseFile);
   const lineSubtotal = lines.reduce((sum, line) => sum + lineNetTotal(line), 0);
   const lineVat = lines.reduce((sum, line) => sum + lineNetTotal(line) * (asNumber(line.vatRate) / 100), 0);
-  const farewell = caseFile.offer.flexibleFarewell.enabled ? asNumber(caseFile.offer.flexibleFarewell.price) : 0;
+  const farewell = caseFile.offer.flexibleFarewell.enabled ? flexibleFarewellTotal(caseFile.offer.flexibleFarewell) : 0;
   const farewellVat = farewell * 0.081;
   return {
     subtotal: lineSubtotal + farewell,
@@ -60,14 +66,15 @@ export function buildBexioDraft(caseFile: FuneralCase): BexioDraft {
     }));
 
   const farewell = caseFile.offer.flexibleFarewell;
-  if (farewell.enabled && asNumber(farewell.price) > 0) {
+  const farewellTotal = flexibleFarewellTotal(farewell);
+  if (farewell.enabled && farewellTotal > 0) {
     offerPositions.push({
       source: "offer",
       description: farewell.description || "Abschied",
-      quantity: 1,
+      quantity: asNumber(farewell.hours) > 0 ? asNumber(farewell.hours) : 1,
       unitPrice: asNumber(farewell.price),
       vatRate: 8.1,
-      total: asNumber(farewell.price),
+      total: farewellTotal,
     });
   }
 

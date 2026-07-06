@@ -420,6 +420,32 @@ td small { color: var(--muted); }
   white-space: nowrap;
 }
 
+.farewell-preview {
+  display: grid;
+  gap: 4px;
+  min-height: 72px;
+  border: 1px solid #dec68f;
+  border-radius: 8px;
+  background: #fffaf0;
+  padding: 12px;
+}
+
+.farewell-preview span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 760;
+  text-transform: uppercase;
+}
+
+.farewell-preview strong {
+  color: var(--text);
+  font-size: 22px;
+}
+
+.farewell-preview small {
+  color: var(--muted);
+}
+
 .offer-heading {
   display: flex;
   justify-content: space-between;
