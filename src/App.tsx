@@ -18,6 +18,7 @@ import type {
   Employee,
   FuneralCase,
   GraveType,
+  Appointment,
   OfferLine,
   TaskStatus,
   WizardStep,
@@ -567,8 +568,8 @@ function InternalStep({ caseFile, onChange }: StepProps) {
         <div className="appointment-grid">
           <AppointmentEditor title="Kremation" value={appointments.cremation} onChange={(field, value) => updateNested("cremation", field, value)} />
           <AppointmentEditor title="Aufbahrung" value={appointments.viewing} onChange={(field, value) => updateNested("viewing", field, value)} />
-          <AppointmentEditor title="Abschied" value={appointments.farewell} onChange={(field, value) => updateNested("farewell", field, value)} />
-          <AppointmentEditor title="Urnenbeisetzung" value={appointments.urnBurial} onChange={(field, value) => updateNested("urnBurial", field, value)} />
+          <AppointmentEditor title="Abschied" value={appointments.farewell} onChange={(field, value) => updateNested("farewell", field, value)} timeRange />
+          <AppointmentEditor title="Urnenbeisetzung" value={appointments.urnBurial} onChange={(field, value) => updateNested("urnBurial", field, value)} timeRange />
           <SelectField label="Grabart" value={appointments.graveType} onChange={(value) => updateAppointment("graveType", value as GraveType)} options={["", "Gemeinschaftsgrab", "Urnengrab", "Privat", "Mit Name", "Ohne Name", "Erdbestattung"]} />
         </div>
       </section>
@@ -806,13 +807,30 @@ function OfferTable({ caseFile, compact = false }: { caseFile: FuneralCase; comp
   );
 }
 
-function AppointmentEditor({ title, value, onChange }: { title: string; value: { place: string; date: string; time: string }; onChange: (field: string, value: string) => void }) {
+function AppointmentEditor({
+  title,
+  value,
+  onChange,
+  timeRange = false,
+}: {
+  title: string;
+  value: Appointment;
+  onChange: (field: string, value: string) => void;
+  timeRange?: boolean;
+}) {
   return (
     <div className="appointment-card">
       <h4>{title}</h4>
       <Field label="Ort" value={value.place} onChange={(next) => onChange("place", next)} />
       <Field type="date" label="Datum" value={value.date} onChange={(next) => onChange("date", next)} />
-      <Field type="time" label="Zeit" value={value.time} onChange={(next) => onChange("time", next)} />
+      {timeRange ? (
+        <>
+          <Field type="time" label="Zeit von" value={value.timeFrom || value.time} onChange={(next) => onChange("timeFrom", next)} />
+          <Field type="time" label="Zeit bis" value={value.timeTo} onChange={(next) => onChange("timeTo", next)} />
+        </>
+      ) : (
+        <Field type="time" label="Zeit" value={value.time} onChange={(next) => onChange("time", next)} />
+      )}
     </div>
   );
 }

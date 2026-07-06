@@ -79,6 +79,8 @@ export interface Appointment {
   place: string;
   date: string;
   time: string;
+  timeFrom: string;
+  timeTo: string;
 }
 
 export interface WorkReportRow {
