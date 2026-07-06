@@ -22,10 +22,20 @@ export function lineVat(line: Pick<OfferLine, "quantity" | "price" | "vatRate">)
   return lineNetTotal(line) * (asNumber(line.vatRate) / 100);
 }
 
-export function flexibleFarewellTotal(farewell: Pick<FlexibleFarewell, "hours" | "price">): number {
+export function flexibleFarewellHourlyRate(
+  farewell: Pick<FlexibleFarewell, "price" | "professionalCount" | "assistantCount" | "assistantRate">,
+): number {
+  const professionalCount = asNumber(farewell.professionalCount);
+  const assistantCount = asNumber(farewell.assistantCount);
+  return professionalCount * asNumber(farewell.price) + assistantCount * asNumber(farewell.assistantRate);
+}
+
+export function flexibleFarewellTotal(
+  farewell: Pick<FlexibleFarewell, "hours" | "price" | "professionalCount" | "assistantCount" | "assistantRate">,
+): number {
   const hours = asNumber(farewell.hours);
-  const price = asNumber(farewell.price);
-  return hours > 0 ? hours * price : price;
+  const hourlyRate = flexibleFarewellHourlyRate(farewell);
+  return hours > 0 ? hours * hourlyRate : hourlyRate;
 }
 
 export function selectedOfferLines(caseFile: FuneralCase): OfferLine[] {
@@ -68,11 +78,13 @@ export function buildBexioDraft(caseFile: FuneralCase): BexioDraft {
   const farewell = caseFile.offer.flexibleFarewell;
   const farewellTotal = flexibleFarewellTotal(farewell);
   if (farewell.enabled && farewellTotal > 0) {
+    const hours = asNumber(farewell.hours);
+    const unitPrice = hours > 0 ? flexibleFarewellHourlyRate(farewell) : farewellTotal;
     offerPositions.push({
       source: "offer",
       description: farewell.description || "Abschied",
-      quantity: asNumber(farewell.hours) > 0 ? asNumber(farewell.hours) : 1,
-      unitPrice: asNumber(farewell.price),
+      quantity: hours > 0 ? hours : 1,
+      unitPrice,
       vatRate: 8.1,
       total: farewellTotal,
     });

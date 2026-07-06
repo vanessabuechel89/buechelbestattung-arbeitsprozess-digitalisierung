@@ -130,8 +130,11 @@ export function createEmptyCase(existingCases: FuneralCase[]): FuneralCase {
       flexibleFarewell: {
         enabled: false,
         description: "",
-        price: 0,
+        price: 180,
         hours: 0,
+        professionalCount: 1,
+        assistantCount: 1,
+        assistantRate: 80,
         employees: [],
         note: "",
       },

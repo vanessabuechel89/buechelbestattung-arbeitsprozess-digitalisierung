@@ -32,6 +32,9 @@ export interface FlexibleFarewell {
   description: string;
   price: number;
   hours: number;
+  professionalCount: number;
+  assistantCount: number;
+  assistantRate: number;
   employees: Employee[];
   note: string;
 }

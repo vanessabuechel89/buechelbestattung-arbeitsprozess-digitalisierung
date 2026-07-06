@@ -26,6 +26,7 @@ import type {
 import {
   asNumber,
   buildBexioDraft,
+  flexibleFarewellHourlyRate,
   flexibleFarewellTotal,
   formatCurrency,
   formatDate,
@@ -382,8 +383,12 @@ function ConsultationStep({ caseFile, onChange }: StepProps) {
   const locked = caseFile.consultationLocked;
   const categories = Array.from(new Set(caseFile.offer.lines.map((line) => line.category)));
   const farewellTotal = flexibleFarewellTotal(caseFile.offer.flexibleFarewell);
+  const farewellHourlyRate = flexibleFarewellHourlyRate(caseFile.offer.flexibleFarewell);
   const farewellHours = asNumber(caseFile.offer.flexibleFarewell.hours);
-  const farewellPrice = asNumber(caseFile.offer.flexibleFarewell.price);
+  const farewellProfessionalCount = asNumber(caseFile.offer.flexibleFarewell.professionalCount);
+  const farewellAssistantCount = asNumber(caseFile.offer.flexibleFarewell.assistantCount);
+  const farewellProfessionalRate = asNumber(caseFile.offer.flexibleFarewell.price);
+  const farewellAssistantRate = asNumber(caseFile.offer.flexibleFarewell.assistantRate);
 
   function updateLine(lineId: string, changes: Partial<OfferLine>) {
     onChange({
@@ -428,16 +433,39 @@ function ConsultationStep({ caseFile, onChange }: StepProps) {
           <h3>Abschied flexibel</h3>
           <div className="form-grid">
             <label className="check-card full">
-              <input type="checkbox" checked={caseFile.offer.flexibleFarewell.enabled} onChange={(event) => updateFarewell({ enabled: event.target.checked })} disabled={locked} />
+              <input
+                type="checkbox"
+                checked={caseFile.offer.flexibleFarewell.enabled}
+                onChange={(event) =>
+                  updateFarewell({
+                    enabled: event.target.checked,
+                    price: caseFile.offer.flexibleFarewell.price || 180,
+                    professionalCount: caseFile.offer.flexibleFarewell.professionalCount || 1,
+                    assistantCount: caseFile.offer.flexibleFarewell.assistantCount || 1,
+                    assistantRate: caseFile.offer.flexibleFarewell.assistantRate || 80,
+                  })
+                }
+                disabled={locked}
+              />
               Abschied individuell in Offerte aufnehmen
             </label>
             <Field label="Beschreibung" value={caseFile.offer.flexibleFarewell.description} onChange={(value) => updateFarewell({ description: value })} disabled={locked} />
-            <Field type="number" label="Preis / Ansatz CHF" value={String(caseFile.offer.flexibleFarewell.price)} onChange={(value) => updateFarewell({ price: asNumber(value) })} disabled={locked} />
             <Field type="number" label="Stunden" value={String(caseFile.offer.flexibleFarewell.hours)} onChange={(value) => updateFarewell({ hours: asNumber(value) })} disabled={locked} />
+            <Field type="number" label="Fachperson Anzahl" value={String(caseFile.offer.flexibleFarewell.professionalCount)} onChange={(value) => updateFarewell({ professionalCount: asNumber(value) })} disabled={locked} />
+            <Field type="number" label="Fachperson Ansatz CHF" value={String(caseFile.offer.flexibleFarewell.price)} onChange={(value) => updateFarewell({ price: asNumber(value) })} disabled={locked} />
+            <Field type="number" label="Gehilfe Anzahl" value={String(caseFile.offer.flexibleFarewell.assistantCount)} onChange={(value) => updateFarewell({ assistantCount: asNumber(value) })} disabled={locked} />
+            <Field type="number" label="Gehilfe Ansatz CHF" value={String(caseFile.offer.flexibleFarewell.assistantRate)} onChange={(value) => updateFarewell({ assistantRate: asNumber(value) })} disabled={locked} />
             <div className="farewell-preview full">
               <span>Berechneter Abschied</span>
               <strong>{formatCurrency(farewellTotal)}</strong>
-              <small>{farewellHours > 0 ? `${farewellHours} Std. x ${formatCurrency(farewellPrice)}` : "Pauschalpreis ohne Stunden"}</small>
+              <small>
+                {farewellHours > 0
+                  ? `${farewellHours} Std. x ${formatCurrency(farewellHourlyRate)}`
+                  : `${formatCurrency(farewellHourlyRate)} pro Stunde`}
+              </small>
+              <small>
+                {farewellProfessionalCount} Fachperson x {formatCurrency(farewellProfessionalRate)} + {farewellAssistantCount} Gehilfe x {formatCurrency(farewellAssistantRate)}
+              </small>
             </div>
             <div className="field">
               Mitarbeitende
@@ -742,6 +770,7 @@ function OfferTable({ caseFile, compact = false }: { caseFile: FuneralCase; comp
   const lines = caseFile.offer.lines.filter((line) => line.selected && line.showInOffer);
   const farewell = caseFile.offer.flexibleFarewell;
   const farewellHours = asNumber(farewell.hours);
+  const farewellHourlyRate = flexibleFarewellHourlyRate(farewell);
   const farewellTotal = flexibleFarewellTotal(farewell);
   return (
     <div className="table-wrap">
@@ -767,7 +796,7 @@ function OfferTable({ caseFile, compact = false }: { caseFile: FuneralCase; comp
             <tr>
               <td>{farewell.description || "Abschied"}</td>
               <td>{farewellHours > 0 ? `${farewellHours} Std.` : "1"}</td>
-              <td>{formatCurrency(farewell.price)}</td>
+              <td>{formatCurrency(farewellHours > 0 ? farewellHourlyRate : farewellTotal)}</td>
               <td className="right">{formatCurrency(farewellTotal)}</td>
             </tr>
           )}
