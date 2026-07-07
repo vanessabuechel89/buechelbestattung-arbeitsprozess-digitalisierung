@@ -69,3 +69,10 @@ export function resolveBexioProxyUrl(settings: Pick<BexioSettings, "supabaseProj
 
   return `${supabaseUrl}/functions/v1/bexio-invoice`;
 }
+
+export function resolveBexioOAuthStartUrl(settings: Pick<BexioSettings, "supabaseProjectUrl">): string {
+  const supabaseUrl = settings.supabaseProjectUrl.trim().replace(/\/$/, "");
+  if (!supabaseUrl) return "";
+
+  return `${supabaseUrl}/functions/v1/bexio-oauth-start`;
+}

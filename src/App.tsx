@@ -12,7 +12,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { caseStatuses, employees, taskStatuses, wizardSteps, workReportExamples } from "./data/constants";
-import { buildBexioPayload, downloadBexioPayload, resolveBexioProxyUrl, sendBexioPayload } from "./integrations/bexio";
+import { buildBexioPayload, downloadBexioPayload, resolveBexioOAuthStartUrl, resolveBexioProxyUrl, sendBexioPayload } from "./integrations/bexio";
 import { bexioSettingsRepository } from "./storage/bexioSettingsRepository";
 import { exportCases, createEmptyCase, localStorageCaseRepository } from "./storage/caseRepository";
 import type {
@@ -676,6 +676,7 @@ function InvoiceBaseStep({ caseFile }: StepProps) {
   const [isSending, setIsSending] = useState(false);
   const payload = buildBexioPayload(caseFile, draft, settings);
   const resolvedProxyUrl = resolveBexioProxyUrl(settings);
+  const oauthStartUrl = resolveBexioOAuthStartUrl(settings);
 
   function updateSettings(changes: Partial<BexioSettings>) {
     const nextSettings = { ...settings, ...changes };
@@ -768,6 +769,9 @@ function InvoiceBaseStep({ caseFile }: StepProps) {
         </div>
         <p className="proxy-preview">Verwendete Function-URL: {resolvedProxyUrl || "Noch nicht eingerichtet"}</p>
         <div className="integration-actions">
+          <a className={`button secondary ${oauthStartUrl ? "" : "disabled-link"}`} href={oauthStartUrl || undefined} target="_blank" rel="noreferrer">
+            Bexio verbinden
+          </a>
           <button className="button secondary" onClick={() => downloadBexioPayload(payload)}>
             <Download size={18} /> Bexio-Payload herunterladen
           </button>

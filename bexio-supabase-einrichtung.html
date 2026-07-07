@@ -136,6 +136,8 @@
       <section>
         <h2>Was bereits im Projekt vorbereitet ist</h2>
         <ul>
+          <li><code>supabase/functions/bexio-oauth-start/index.ts</code> startet die Verbindung zu Bexio.</li>
+          <li><code>supabase/functions/bexio-oauth-callback/index.ts</code> nimmt die Bexio-Antwort entgegen.</li>
           <li><code>supabase/functions/bexio-invoice/index.ts</code> erstellt den Bexio-Kontakt und Rechnungsentwurf.</li>
           <li><code>supabase/config.toml</code> enthält die Function-Konfiguration.</li>
           <li><code>supabase/.env.example</code> zeigt die benötigten Secrets.</li>
@@ -155,28 +157,39 @@
       </section>
 
       <section>
-        <h2>2. Bexio API Token vorbereiten</h2>
+        <h2>2. Bexio Developer App vorbereiten</h2>
         <ol>
-          <li>In Bexio einen API-Zugang / Token erstellen.</li>
-          <li>Der Token muss Kontakte und Rechnungen lesen/erstellen dürfen.</li>
-          <li>Den Token nicht in die App kopieren, sondern nur in Supabase als Secret speichern.</li>
+          <li>Im Bexio Developer Portal eine App erstellen.</li>
+          <li>Als Redirect URL eintragen:</li>
         </ol>
-        <p class="note">Wenn du den Token hast, kann ich mit dir den finalen Testlauf machen.</p>
+        <pre>https://awwpowwmzlnyypsirawj.supabase.co/functions/v1/bexio-oauth-callback</pre>
+        <ol start="3">
+          <li>Client ID und Client Secret kopieren.</li>
+          <li>Das Client Secret geheim halten und nicht in Screenshots oder Chats teilen.</li>
+        </ol>
       </section>
 
       <section>
         <h2>3. Secrets in Supabase setzen</h2>
-        <p>In Supabase bei Edge Functions / Secrets eintragen:</p>
-        <pre>BEXIO_API_TOKEN=dein_bexio_token
+        <p>In Supabase bei Edge Functions / Secrets zuerst eintragen:</p>
+        <pre>BEXIO_CLIENT_ID=deine_bexio_client_id
+BEXIO_CLIENT_SECRET=dein_neues_geheimes_client_secret
+BEXIO_REDIRECT_URI=https://awwpowwmzlnyypsirawj.supabase.co/functions/v1/bexio-oauth-callback
 BEXIO_DEFAULT_COUNTRY_ID=1</pre>
       </section>
 
       <section>
         <h2>4. Function deployen</h2>
         <p>Wenn die Supabase CLI eingerichtet ist, im Projektordner ausführen:</p>
-        <pre>supabase functions deploy bexio-invoice</pre>
-        <p>Danach ist die Function erreichbar unter:</p>
-        <pre>https://DEIN-PROJEKT.supabase.co/functions/v1/bexio-invoice</pre>
+        <pre>supabase functions deploy bexio-oauth-start
+supabase functions deploy bexio-oauth-callback
+supabase functions deploy bexio-invoice</pre>
+        <p>Danach den Bexio-Login starten:</p>
+        <pre>https://awwpowwmzlnyypsirawj.supabase.co/functions/v1/bexio-oauth-start</pre>
+        <p>Nach erfolgreichem Login zeigt die Callback-Seite die Token-Secrets an. Diese Werte in Supabase als Secrets speichern:</p>
+        <pre>BEXIO_ACCESS_TOKEN=...
+BEXIO_REFRESH_TOKEN=...
+BEXIO_TOKEN_EXPIRES_IN=...</pre>
       </section>
 
       <section>

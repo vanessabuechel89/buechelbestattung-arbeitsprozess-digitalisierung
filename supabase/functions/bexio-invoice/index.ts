@@ -52,9 +52,9 @@ Deno.serve(async (request) => {
   }
 
   try {
-    const token = Deno.env.get("BEXIO_API_TOKEN");
+    const token = Deno.env.get("BEXIO_ACCESS_TOKEN") || Deno.env.get("BEXIO_API_TOKEN");
     if (!token) {
-      return jsonResponse({ error: "Missing Supabase secret BEXIO_API_TOKEN" }, 500);
+      return jsonResponse({ error: "Missing Supabase secret BEXIO_ACCESS_TOKEN" }, 500);
     }
 
     const payload = (await request.json()) as BexioPayload;

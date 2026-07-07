@@ -2,3 +2,9 @@ project_id = "buechel-bestattungen"
 
 [functions.bexio-invoice]
 verify_jwt = false
+
+[functions.bexio-oauth-start]
+verify_jwt = false
+
+[functions.bexio-oauth-callback]
+verify_jwt = false

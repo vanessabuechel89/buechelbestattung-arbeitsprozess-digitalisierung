@@ -152,6 +152,11 @@ td small { color: var(--muted); }
   cursor: not-allowed;
 }
 
+.disabled-link {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .icon-button {
   width: 42px;
   height: 42px;
