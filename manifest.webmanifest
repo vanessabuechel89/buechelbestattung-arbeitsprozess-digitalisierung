@@ -1,0 +1,20 @@
+{
+  "name": "Büchel Bestattungen – Todesfälle",
+  "short_name": "Büchel Fälle",
+  "description": "Zentrale Arbeits-App für Todesfälle, Organisation und Rapport.",
+  "lang": "de-CH",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f8f7f3",
+  "theme_color": "#8b6f42",
+  "icons": [
+    {
+      "src": "./app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
